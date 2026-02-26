@@ -8,10 +8,10 @@
         libre: 'Libre', asignada: 'Asignada', capturada: 'Capturada',
         en_trabajo: 'En trabajo', finalizada_ok: 'Finalizada ✓',
         finalizada_no_ok: 'Finalizada ✗', cliente_ausente: 'Ausente',
-        recitar: 'Recitar', paralizada: 'Paralizada'
+        recitar: 'Recitar', paralizada: 'Paralizada', cancelada: 'Cancelada'
     };
 
-    const STATUS_DONE = ['finalizada_ok', 'finalizada_no_ok', 'cliente_ausente', 'recitar', 'paralizada'];
+    const STATUS_DONE = ['finalizada_ok', 'finalizada_no_ok', 'cliente_ausente', 'recitar', 'paralizada', 'cancelada'];
 
     const DAY_NAMES = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
     const MONTH_NAMES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
@@ -77,8 +77,9 @@
         grid.innerHTML = '';
 
         try {
-            const resp = await fetch(SCRIPT_URL + '?action=getLiveCitas&days=14&t=' + Date.now());
+            const resp = await fetch('https://jarl9801.github.io/field-report/citas.json?t=' + Date.now());
             const data = await resp.json();
+            data.success = true;
 
             if (!data.success) throw new Error(data.error || 'Error del servidor');
 
@@ -109,7 +110,9 @@
                 return;
             }
 
-            const teamOptions = ADMIN_TEAMS.map(t => `<option value="${t}">${t}</option>`).join('');
+            const teamOptions = (cita) => ADMIN_TEAMS
+                .filter(t => !cita.equipo || t !== cita.equipo)
+                .map(t => `<option value="${t}">${t}</option>`).join('');
 
             // Group by date
             const byDate = {};
@@ -120,7 +123,7 @@
                     <div class="cita-date-header">
                         📅 ${fmtDate(fecha)} <span style="color:var(--text-secondary);font-weight:400;font-size:12px;">(${byDate[fecha].length} cita${byDate[fecha].length > 1 ? 's' : ''})</span>
                     </div>
-                    ${byDate[fecha].map(c => renderCitaCard(c, teamOptions)).join('')}
+                    ${byDate[fecha].map(c => renderCitaCard(c, teamOptions(c))).join('')}
                 </div>
             `).join('');
 
@@ -136,7 +139,7 @@
         const isDone = STATUS_DONE.includes(c.status);
         const badgeCls = statusBadgeClass(c.status);
         const badgeLbl = STATUS_LABELS[c.status] || c.status;
-        const selected = c.equipo ? `<option value="${c.equipo}" selected>${c.equipo}</option>` : '<option value="">— Equipo —</option>';
+        const selected = c.equipo ? `<option value="${c.equipo}" selected>${c.equipo}</option><option value="">— Cambiar equipo —</option>` : '<option value="">— Equipo —</option>';
         const addr = c.calle ? `${c.calle}, ${c.cp} ${c.ciudad}`.trim() : (c.ciudad || '—');
 
         return `
@@ -185,9 +188,24 @@
             const result = await resp.json();
 
             if (result.success) {
+                // Update cache
+                if (citasCache[citaId]) {
+                    citasCache[citaId].equipo = equipo;
+                    citasCache[citaId].linkDocs = linkDocs;
+                    citasCache[citaId].status = citasCache[citaId].status === 'libre' ? 'asignada' : citasCache[citaId].status;
+                }
+                // Update badge in DOM
+                const cardEl = document.getElementById('cita-' + citaId);
+                if (cardEl) {
+                    const badge = cardEl.querySelector('.badge');
+                    const newStatus = citasCache[citaId] ? citasCache[citaId].status : 'asignada';
+                    if (badge) {
+                        badge.className = 'badge ' + statusBadgeClass(newStatus);
+                        badge.textContent = STATUS_LABELS[newStatus] || newStatus;
+                    }
+                }
                 btn.textContent = '✅';
                 window.toast('Cita asignada a ' + equipo, 'success');
-                setTimeout(() => window.loadNe4Citas(), 1500);
             } else {
                 throw new Error(result.error || 'Error al asignar');
             }
