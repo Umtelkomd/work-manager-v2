@@ -77,14 +77,33 @@
         grid.innerHTML = '';
 
         try {
-            const resp = await fetch('https://jarl9801.github.io/field-report/citas.json?t=' + Date.now());
-            const data = await resp.json();
-            data.success = true;
+            // Fetch both: citas.json (calendar source) + Apps Script (assignments)
+            const [respJson, respScript] = await Promise.all([
+                fetch('https://jarl9801.github.io/field-report/citas.json?t=' + Date.now()),
+                fetch(SCRIPT_URL + '?action=getLiveCitas&t=' + Date.now()).catch(() => null)
+            ]);
+            const data = await respJson.json();
 
-            if (!data.success) throw new Error(data.error || 'Error del servidor');
+            // Merge assignments from Apps Script into citas.json data
+            let assignMap = {};
+            if (respScript) {
+                try {
+                    const scriptData = await respScript.json();
+                    (scriptData.citas || []).forEach(c => { assignMap[c.id] = c; });
+                } catch(e) { console.warn('Apps Script merge failed:', e); }
+            }
+            // Apply assignment data (equipo, status, linkDocs) from Apps Script
+            (data.citas || []).forEach(c => {
+                const a = assignMap[c.id];
+                if (a) {
+                    if (a.equipo) c.equipo = a.equipo;
+                    if (a.status && a.status !== 'libre') c.status = a.status;
+                    if (a.linkDocs) c.linkDocs = a.linkDocs;
+                }
+            });
 
             const today = new Date().toISOString().split('T')[0];
-            allCitasData = (data.citas || []).filter(c => c.fecha >= today);
+            allCitasData = (data.citas || []).filter(c => c.fecha >= today && !STATUS_DONE.includes(c.status));
             citasCache = {};
             allCitasData.forEach(c => { citasCache[c.id] = c; });
 
