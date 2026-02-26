@@ -30,6 +30,7 @@
         ne4citas: 'Citas NE4',
         clients: 'Clientes NE4',
         certification: 'Certificación',
+        hub: '🔗 Hub de Apps',
         settings: 'Ajustes'
     };
 
