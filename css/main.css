@@ -438,6 +438,46 @@ tbody tr:last-child td { border-bottom: none; }
 .upload-zone .label { font-size: 14px; font-weight: 600; }
 .upload-zone .hint { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
 
+/* ===== NE3 DROPDOWN CHECKBOX FILTERS ===== */
+.filter-drop { position: relative; display: inline-block; }
+.filter-btn {
+    padding: 6px 14px; background: var(--bg-secondary);
+    border: 0.5px solid var(--border); border-radius: 20px;
+    color: var(--text-secondary); font-size: 12px; font-weight: 500;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+    transition: all var(--transition); white-space: nowrap;
+}
+.filter-btn:hover, .filter-btn.active { border-color: var(--blue); color: var(--text-primary); }
+.filter-count {
+    background: var(--blue); color: #fff; font-size: 10px;
+    padding: 1px 6px; border-radius: 10px; font-weight: 700;
+    min-width: 16px; text-align: center;
+}
+.filter-count:empty { display: none; }
+.filter-menu {
+    display: none; position: absolute; top: calc(100% + 6px); left: 0;
+    background: var(--bg-secondary); border: 0.5px solid var(--border-light);
+    border-radius: var(--radius); padding: 6px 0; min-width: 180px;
+    z-index: 200; box-shadow: var(--shadow-lg);
+    max-height: 280px; overflow-y: auto;
+}
+.filter-menu.open { display: block; }
+.filter-check-label {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 14px; cursor: pointer; font-size: 12px;
+    transition: background var(--transition);
+}
+.filter-check-label:hover { background: var(--bg-hover); }
+.filter-check-label input[type="checkbox"] {
+    accent-color: var(--blue); width: 15px; height: 15px; cursor: pointer;
+}
+
+/* ===== NE3 PHASE & CONTRACT BADGES ===== */
+.ne3-badge-contract {
+    background: var(--bg-tertiary); color: var(--text-secondary);
+    font-size: 11px; font-weight: 600;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .sidebar { transform: translateX(-100%); }

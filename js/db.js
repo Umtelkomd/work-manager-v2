@@ -1,13 +1,18 @@
 // IndexedDB layer for Work Manager v2
 const DB = (() => {
     const DB_NAME = 'WorkManagerV2';
-    const DB_VERSION = 1;
+    const DB_VERSION = 2;
     let db = null;
 
     const STORES = {
         projects: { keyPath: 'code' },
         records: { keyPath: 'id', autoIncrement: true },
         clients: { keyPath: 'id', autoIncrement: true },
+        ne3_clients: { keyPath: 'id', autoIncrement: true },
+        orders_ra: { keyPath: 'id', autoIncrement: true },
+        orders_rd: { keyPath: 'id', autoIncrement: true },
+        orders_fusion: { keyPath: 'id', autoIncrement: true },
+        go_status: { keyPath: 'id', autoIncrement: true },
         teams: { keyPath: 'id' },
         team_assignments: { keyPath: 'id', autoIncrement: true },
         certification: { keyPath: 'id', autoIncrement: true },
@@ -24,6 +29,25 @@ const DB = (() => {
         ],
         clients: [
             { name: 'by_project', keyPath: 'projectCode' },
+            { name: 'by_dp', keyPath: 'dp' }
+        ],
+        ne3_clients: [
+            { name: 'by_project', keyPath: 'projectCode' },
+            { name: 'by_dp', keyPath: 'dp' },
+            { name: 'by_auftrag', keyPath: 'auftrag', unique: true }
+        ],
+        orders_ra: [
+            { name: 'by_project', keyPath: 'projectCode' }
+        ],
+        orders_rd: [
+            { name: 'by_project', keyPath: 'projectCode' },
+            { name: 'by_dp', keyPath: 'dp' }
+        ],
+        orders_fusion: [
+            { name: 'by_project', keyPath: 'projectCode' },
+            { name: 'by_dp', keyPath: 'dp' }
+        ],
+        go_status: [
             { name: 'by_dp', keyPath: 'dp' }
         ],
         team_assignments: [
