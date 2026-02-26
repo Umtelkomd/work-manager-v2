@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Work Manager v2</title>
+    <style>
+        body { font-family: Inter, system-ui, sans-serif; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .box { text-align: center; padding: 40px; }
+        button { padding: 12px 24px; border-radius: 12px; border: none; background: #ff453a; color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; margin: 8px; }
+        button.secondary { background: #2c2c2e; }
+        p { color: #8e8e93; margin: 16px 0; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>⚠️ Reset Work Manager v2</h1>
+        <p>Esto eliminará toda la base de datos IndexedDB y el caché del Service Worker.</p>
+        <button onclick="resetAll()">Borrar todo</button>
+        <button class="secondary" onclick="window.location.href='index.html'">Cancelar</button>
+        <p id="status"></p>
+    </div>
+    <script>
+        async function resetAll() {
+            const status = document.getElementById('status');
+            try {
+                // Delete IndexedDB
+                indexedDB.deleteDatabase('WorkManagerV2');
+                status.textContent = '✅ Base de datos eliminada';
+
+                // Unregister SW
+                const regs = await navigator.serviceWorker.getRegistrations();
+                for (const reg of regs) await reg.unregister();
+                status.textContent += '\n✅ Service Worker eliminado';
+
+                // Clear caches
+                const keys = await caches.keys();
+                for (const key of keys) await caches.delete(key);
+                status.textContent += '\n✅ Caché eliminado';
+
+                status.textContent += '\n\n🔄 Recargando en 2s...';
+                setTimeout(() => window.location.href = 'index.html', 2000);
+            } catch (e) {
+                status.textContent = '❌ Error: ' + e.message;
+            }
+        }
+    </script>
+</body>
+</html>
