@@ -948,3 +948,762 @@ tbody tr:last-child td { border-bottom: none; }
         font-size: 18px;
     }
 }
+/* ============================================
+   NEXUS OS v3.0 — Enterprise Design System
+   Linear × Vercel × Notion inspired
+   ============================================ */
+
+/* --- Variables --- */
+:root {
+    --nx-bg: #0a0a0a;
+    --nx-bg-elevated: #141414;
+    --nx-bg-card: #1a1a1a;
+    --nx-bg-hover: #222222;
+    --nx-border: rgba(255,255,255,0.06);
+    --nx-border-strong: rgba(255,255,255,0.12);
+    
+    --nx-text: #fafafa;
+    --nx-text-secondary: #a1a1aa;
+    --nx-text-tertiary: #71717a;
+    
+    --nx-accent: #3b82f6;
+    --nx-accent-light: #60a5fa;
+    --nx-green: #22c55e;
+    --nx-orange: #f97316;
+    --nx-purple: #a855f7;
+    --nx-teal: #14b8a6;
+    --nx-red: #ef4444;
+    
+    --nx-radius: 12px;
+    --nx-radius-sm: 8px;
+    --nx-radius-lg: 16px;
+    --nx-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --nx-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04);
+    --nx-shadow-lg: 0 8px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+    --nx-shadow-glow: 0 0 40px rgba(59,130,246,0.15);
+}
+
+/* --- Container --- */
+.nexus-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 32px 48px;
+    animation: nexus-fade-in 0.6s var(--nx-ease);
+}
+
+@keyframes nexus-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Header --- */
+.nexus-header {
+    margin-bottom: 32px;
+}
+
+.nexus-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    background: var(--nx-bg-elevated);
+    border: 1px solid var(--nx-border);
+    border-radius: var(--nx-radius-lg);
+    box-shadow: var(--nx-shadow);
+}
+
+.nexus-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.nexus-logo {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--nx-accent), var(--nx-purple));
+    border-radius: var(--nx-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 20px rgba(59,130,246,0.3);
+}
+
+.nexus-logo svg {
+    width: 22px;
+    height: 22px;
+}
+
+.nexus-brand-text h1 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--nx-text);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nexus-brand-text h1 span {
+    color: var(--nx-accent-light);
+    font-weight: 500;
+}
+
+.nexus-brand-text p {
+    font-size: 13px;
+    color: var(--nx-text-secondary);
+    margin-top: 2px;
+}
+
+.nexus-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nexus-status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--nx-text-secondary);
+    padding: 8px 14px;
+    background: var(--nx-bg-card);
+    border-radius: 20px;
+    border: 1px solid var(--nx-border);
+}
+
+.nexus-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--nx-green);
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+    animation: nexus-pulse 2s infinite;
+}
+
+@keyframes nexus-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.9); }
+}
+
+.nexus-time {
+    font-size: 18px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--nx-text);
+    font-family: 'Inter', monospace;
+    letter-spacing: -0.02em;
+}
+
+/* --- Stats --- */
+.nexus-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.nexus-stat-card {
+    padding: 20px 24px;
+    background: var(--nx-bg-elevated);
+    border: 1px solid var(--nx-border);
+    border-radius: var(--nx-radius);
+    box-shadow: var(--nx-shadow);
+    transition: all 0.3s var(--nx-ease);
+}
+
+.nexus-stat-card:hover {
+    background: var(--nx-bg-card);
+    border-color: var(--nx-border-strong);
+    transform: translateY(-2px);
+}
+
+.nexus-stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--nx-text);
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.nexus-stat-label {
+    font-size: 13px;
+    color: var(--nx-text-secondary);
+    margin-bottom: 12px;
+}
+
+.nexus-stat-trend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--nx-text-tertiary);
+    font-weight: 500;
+}
+
+.nexus-stat-trend svg {
+    width: 14px;
+    height: 14px;
+}
+
+.nexus-trend-up {
+    color: var(--nx-green);
+}
+
+.nexus-trend-up svg {
+    stroke: var(--nx-green);
+}
+
+/* --- Sections --- */
+.nexus-section {
+    margin-bottom: 32px;
+}
+
+.nexus-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.nexus-section-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.nexus-section-icon {
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--nx-bg-elevated);
+    border-radius: var(--nx-radius-sm);
+    border: 1px solid var(--nx-border);
+}
+
+.nexus-section-title h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--nx-text);
+    letter-spacing: -0.01em;
+}
+
+.nexus-section-title p {
+    font-size: 13px;
+    color: var(--nx-text-tertiary);
+    margin-top: 2px;
+}
+
+/* --- Buttons --- */
+.nexus-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: var(--nx-radius-sm);
+    border: 1px solid transparent;
+    background: var(--nx-bg-card);
+    color: var(--nx-text);
+    cursor: pointer;
+    transition: all 0.2s var(--nx-ease);
+    font-family: inherit;
+}
+
+.nexus-btn:hover {
+    background: var(--nx-bg-hover);
+    border-color: var(--nx-border-strong);
+}
+
+.nexus-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.nexus-btn-ghost {
+    background: transparent;
+    border-color: var(--nx-border);
+    color: var(--nx-text-secondary);
+}
+
+.nexus-btn-ghost:hover {
+    background: var(--nx-bg-elevated);
+    color: var(--nx-text);
+}
+
+.nexus-btn-sm {
+    padding: 8px 14px;
+    font-size: 12px;
+}
+
+.nexus-btn-full {
+    width: 100%;
+}
+
+.nexus-btn-green {
+    background: rgba(34,197,94,0.15);
+    border-color: rgba(34,197,94,0.3);
+    color: var(--nx-green);
+}
+
+.nexus-btn-green:hover {
+    background: rgba(34,197,94,0.25);
+    border-color: var(--nx-green);
+}
+
+.nexus-btn-orange {
+    background: rgba(249,115,22,0.15);
+    border-color: rgba(249,115,22,0.3);
+    color: var(--nx-orange);
+}
+
+.nexus-btn-orange:hover {
+    background: rgba(249,115,22,0.25);
+    border-color: var(--nx-orange);
+}
+
+.nexus-btn-blue {
+    background: rgba(59,130,246,0.15);
+    border-color: rgba(59,130,246,0.3);
+    color: var(--nx-accent-light);
+}
+
+.nexus-btn-blue:hover {
+    background: rgba(59,130,246,0.25);
+    border-color: var(--nx-accent);
+}
+
+.nexus-btn-purple {
+    background: rgba(168,85,247,0.15);
+    border-color: rgba(168,85,247,0.3);
+    color: var(--nx-purple);
+}
+
+.nexus-btn-purple:hover {
+    background: rgba(168,85,247,0.25);
+    border-color: var(--nx-purple);
+}
+
+.nexus-btn-teal {
+    background: rgba(20,184,166,0.15);
+    border-color: rgba(20,184,166,0.3);
+    color: var(--nx-teal);
+}
+
+.nexus-btn-teal:hover {
+    background: rgba(20,184,166,0.25);
+    border-color: var(--nx-teal);
+}
+
+/* --- App Grid --- */
+.nexus-app-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 1100px) {
+    .nexus-app-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .nexus-app-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .nexus-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .nexus-container {
+        padding: 16px;
+    }
+    
+    .nexus-header-content {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+}
+
+/* --- App Cards --- */
+.nexus-app-card {
+    position: relative;
+    background: var(--nx-bg-elevated);
+    border: 1px solid var(--nx-border);
+    border-radius: var(--nx-radius);
+    overflow: hidden;
+    transition: all 0.4s var(--nx-ease);
+    cursor: pointer;
+}
+
+.nexus-app-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--nx-border-strong);
+    box-shadow: var(--nx-shadow-lg), var(--nx-shadow-glow);
+}
+
+.nexus-app-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--nx-accent), var(--nx-purple));
+}
+
+.nexus-accent-green { background: linear-gradient(90deg, var(--nx-green), #4ade80); }
+.nexus-accent-orange { background: linear-gradient(90deg, var(--nx-orange), #fb923c); }
+.nexus-accent-blue { background: linear-gradient(90deg, var(--nx-accent), #60a5fa); }
+.nexus-accent-purple { background: linear-gradient(90deg, var(--nx-purple), #c084fc); }
+.nexus-accent-teal { background: linear-gradient(90deg, var(--nx-teal), #5eead4); }
+
+.nexus-app-body {
+    padding: 20px;
+}
+
+.nexus-app-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.nexus-app-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.nexus-badge-local {
+    background: rgba(59,130,246,0.12);
+    color: var(--nx-accent-light);
+}
+
+.nexus-badge-cloud {
+    background: rgba(161,161,170,0.12);
+    color: var(--nx-text-secondary);
+}
+
+.nexus-badge-local svg,
+.nexus-badge-cloud svg {
+    width: 12px;
+    height: 12px;
+}
+
+.nexus-app-menu {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--nx-text-tertiary);
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: var(--nx-radius-sm);
+    transition: all 0.2s;
+}
+
+.nexus-app-menu:hover {
+    background: var(--nx-bg-hover);
+    color: var(--nx-text);
+}
+
+.nexus-app-icon-lg {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--nx-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.nexus-app-icon-lg svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
+}
+
+.nexus-icon-gradient {
+    background: linear-gradient(135deg, var(--nx-accent), var(--nx-purple));
+    color: white;
+    box-shadow: 0 4px 16px rgba(59,130,246,0.3);
+}
+
+.nexus-icon-green {
+    background: linear-gradient(135deg, var(--nx-green), #4ade80);
+    color: white;
+    box-shadow: 0 4px 16px rgba(34,197,94,0.3);
+}
+
+.nexus-icon-orange {
+    background: linear-gradient(135deg, var(--nx-orange), #fb923c);
+    color: white;
+    box-shadow: 0 4px 16px rgba(249,115,22,0.3);
+}
+
+.nexus-icon-blue {
+    background: linear-gradient(135deg, var(--nx-accent), #60a5fa);
+    color: white;
+    box-shadow: 0 4px 16px rgba(59,130,246,0.3);
+}
+
+.nexus-icon-purple {
+    background: linear-gradient(135deg, var(--nx-purple), #c084fc);
+    color: white;
+    box-shadow: 0 4px 16px rgba(168,85,247,0.3);
+}
+
+.nexus-icon-teal {
+    background: linear-gradient(135deg, var(--nx-teal), #5eead4);
+    color: white;
+    box-shadow: 0 4px 16px rgba(20,184,166,0.3);
+}
+
+.nexus-app-info h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--nx-text);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+}
+
+.nexus-app-info p {
+    font-size: 13px;
+    color: var(--nx-text-secondary);
+    line-height: 1.4;
+}
+
+.nexus-app-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--nx-border);
+}
+
+.nexus-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: var(--nx-bg-card);
+    color: var(--nx-text-secondary);
+    border: 1px solid var(--nx-border);
+}
+
+.nexus-tag-green { background: rgba(34,197,94,0.1); color: var(--nx-green); border-color: rgba(34,197,94,0.2); }
+.nexus-tag-orange { background: rgba(249,115,22,0.1); color: var(--nx-orange); border-color: rgba(249,115,22,0.2); }
+.nexus-tag-blue { background: rgba(59,130,246,0.1); color: var(--nx-accent-light); border-color: rgba(59,130,246,0.2); }
+.nexus-tag-purple { background: rgba(168,85,247,0.1); color: var(--nx-purple); border-color: rgba(168,85,247,0.2); }
+.nexus-tag-teal { background: rgba(20,184,166,0.1); color: var(--nx-teal); border-color: rgba(20,184,166,0.2); }
+
+/* --- Operations Grid --- */
+.nexus-ops-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 768px) {
+    .nexus-ops-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.nexus-op-card {
+    background: var(--nx-bg-elevated);
+    border: 1px solid var(--nx-border);
+    border-radius: var(--nx-radius);
+    padding: 20px;
+    transition: all 0.3s var(--nx-ease);
+}
+
+.nexus-op-card:hover {
+    border-color: var(--nx-border-strong);
+    background: var(--nx-bg-card);
+}
+
+.nexus-op-wide {
+    grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+    .nexus-op-wide {
+        grid-column: span 1;
+    }
+}
+
+.nexus-op-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.nexus-op-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--nx-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.nexus-op-west {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    color: white;
+}
+
+.nexus-op-gfp {
+    background: linear-gradient(135deg, #22c55e, #4ade80);
+    color: white;
+}
+
+.nexus-op-admin {
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    color: white;
+}
+
+.nexus-op-go {
+    background: linear-gradient(135deg, #a855f7, #c084fc);
+    color: white;
+}
+
+.nexus-op-title h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--nx-text);
+}
+
+.nexus-op-title span {
+    font-size: 12px;
+    color: var(--nx-text-secondary);
+    display: block;
+    margin-top: 2px;
+}
+
+.nexus-op-pins {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.nexus-pin {
+    font-size: 12px;
+    padding: 6px 12px;
+    background: var(--nx-bg-card);
+    border: 1px solid var(--nx-border);
+    border-radius: 6px;
+    color: var(--nx-text-secondary);
+    font-family: 'Inter', monospace;
+}
+
+.nexus-pin span {
+    color: var(--nx-accent-light);
+    font-weight: 600;
+    margin-right: 6px;
+}
+
+.nexus-op-note {
+    font-size: 12px;
+    color: var(--nx-text-tertiary);
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: var(--nx-bg-card);
+    border-radius: var(--nx-radius-sm);
+    border: 1px solid var(--nx-border);
+}
+
+/* --- Resources Grid --- */
+.nexus-resources-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+@media (max-width: 900px) {
+    .nexus-resources-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .nexus-resources-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.nexus-resource {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: var(--nx-bg-elevated);
+    border: 1px solid var(--nx-border);
+    border-radius: var(--nx-radius);
+    text-decoration: none;
+    transition: all 0.3s var(--nx-ease);
+}
+
+.nexus-resource:hover {
+    background: var(--nx-bg-card);
+    border-color: var(--nx-green);
+    transform: translateY(-2px);
+}
+
+.nexus-resource-icon {
+    font-size: 24px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--nx-bg-card);
+    border-radius: var(--nx-radius-sm);
+    border: 1px solid var(--nx-border);
+}
+
+.nexus-resource-info h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--nx-text);
+    margin-bottom: 2px;
+}
+
+.nexus-resource-info span {
+    font-size: 11px;
+    color: var(--nx-text-tertiary);
+}
+
+/* --- Legacy Cleanup --- */
+.view {
+    background: var(--nx-bg) !important;
+}
+
+#view-hub {
+    padding: 0 !important;
+}
