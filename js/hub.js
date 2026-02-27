@@ -737,11 +737,14 @@ window.NexusHub = {
     renderWeatherWidget() {
         const w = this.state.weather;
         if (!w) return '<div class="nexus-weather nexus-weather-loading"><span class="nexus-spinner"></span></div>';
-        const codes = Object.keys(this.projectLocations);
-        const options = codes.map(c => {
-            const loc = this.projectLocations[c];
-            const sel = w.project === c ? 'selected' : '';
-            return `<option value="${c}" ${sel}>${c} — ${loc.city}</option>`;
+        const seen = {};
+        const options = Object.entries(this.projectLocations).filter(([c, loc]) => {
+            if (seen[loc.city]) return false;
+            seen[loc.city] = true;
+            return true;
+        }).map(([c, loc]) => {
+            const sel = w.city === loc.city ? 'selected' : '';
+            return `<option value="${c}" ${sel}>${loc.city}</option>`;
         }).join('');
         return `
             <div class="nexus-weather" title="${w.description}">
