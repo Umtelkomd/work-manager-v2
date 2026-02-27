@@ -835,6 +835,53 @@ window.NexusHub = {
     },
 
     attachEvents() {},
+    // ========== APP LAUNCHER ==========
+    launchApp(appId) {
+        const app = this.apps.find(a => a.id === appId);
+        if (!app) return;
+        this.addToRecent(appId);
+        if (app.type === "local" u0026u0026 app.view) {
+            window.navigate(app.view);
+        } else if (app.url) {
+            window.open(app.url, "_blank", "noopener,noreferrer");
+        }
+    },
+    openExternal(url) {
+        window.open(url, "_blank", "noopener,noreferrer");
+    },
+    addToRecent(appId) {
+        this.state.recentApps = [appId, ...this.state.recentApps.filter(id => id !== appId)].slice(0, 5);
+        localStorage.setItem("nexusRecent", JSON.stringify(this.state.recentApps));
+    },
+    toggleFav(appId) {
+        const idx = this.state.favorites.indexOf(appId);
+        if (idx > -1) {
+            this.state.favorites.splice(idx, 1);
+        } else {
+            this.state.favorites.push(appId);
+        }
+        localStorage.setItem("nexusFavs", JSON.stringify(this.state.favorites));
+        this.render();
+    },
+    toggleViewMode() {
+        this.state.viewMode = this.state.viewMode === "grid" ? "list" : "grid";
+        this.render();
+    },
+    openPalette() {
+        this.showToast("⌘K para abrir búsqueda");
+    },
+    closePalette() {},
+    execCommand(cmdId) {
+        switch(cmdId) {
+            case "goto-dashboard": window.navigate("dashboard"); break;
+            case "goto-projects": window.navigate("projects"); break;
+            case "goto-production": window.navigate("production"); break;
+            case "goto-citas": window.navigate("ne4citas"); break;
+            case "goto-cert": window.navigate("certification"); break;
+            case "toggle-theme": this.toggleTheme(); break;
+            case "sync-data": this.manualSync(); break;
+        }
+    },
     toggleNotifications() {},
     renderNotificationsPanel() { return ''; },
     renderCommandPalette() { return ''; },
