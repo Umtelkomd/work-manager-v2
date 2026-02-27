@@ -3463,3 +3463,18 @@ tbody tr:last-child td { border-bottom: none; }
         grid-template-columns: 1fr;
     }
 }
+
+/* Weather project selector */
+.nexus-weather-select {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    color: #e5e5ea;
+    font-size: 12px;
+    padding: 2px 6px;
+    cursor: pointer;
+    outline: none;
+    margin-left: 4px;
+}
+.nexus-weather-select:hover { background: rgba(255,255,255,0.14); }
+.nexus-weather-select option { background: #1c1c1e; color: #e5e5ea; }

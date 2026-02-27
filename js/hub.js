@@ -37,8 +37,18 @@ window.NexusHub = {
         { id: 'done', name: 'Completado', color: '#22c55e' }
     ],
 
+    projectLocations: {
+        'HXT': { city: 'Höxter', lat: 51.77, lon: 9.38 },
+        'RSD': { city: 'Roßdorf', lat: 49.86, lon: 8.76 },
+        'WCB': { city: 'Würzburg', lat: 49.79, lon: 9.95 },
+        'QFF': { city: 'Roßdorf', lat: 49.86, lon: 8.76 },
+        'WRZ': { city: 'Würzburg', lat: 49.79, lon: 9.95 },
+        'EHR': { city: 'Paderborn', lat: 51.72, lon: 8.75 },
+        'AMD': { city: 'Paderborn', lat: 51.72, lon: 8.75 },
+    },
+
     config: {
-        weather: { lat: 52.52, lon: 13.41, city: 'Berlin' },
+        weatherProject: localStorage.getItem('nexusWeatherProject') || null,
         syncInterval: 300000
     },
 
@@ -727,25 +737,42 @@ window.NexusHub = {
     renderWeatherWidget() {
         const w = this.state.weather;
         if (!w) return '<div class="nexus-weather nexus-weather-loading"><span class="nexus-spinner"></span></div>';
+        const codes = Object.keys(this.projectLocations);
+        const options = codes.map(c => {
+            const loc = this.projectLocations[c];
+            const sel = w.project === c ? 'selected' : '';
+            return `<option value="${c}" ${sel}>${c} — ${loc.city}</option>`;
+        }).join('');
         return `
             <div class="nexus-weather" title="${w.description}">
                 <span class="nexus-weather-icon">${w.icon}</span>
                 <span class="nexus-weather-temp">${w.temp}°</span>
-                <span class="nexus-weather-location">${w.city}</span>
+                <select class="nexus-weather-select" onchange="NexusHub.loadWeather(this.value)">
+                    <option value="" ${!w.project ? 'selected' : ''}>Paderborn</option>
+                    ${options}
+                </select>
             </div>`;
     },
 
-    async loadWeather() {
+    async loadWeather(projectCode) {
         try {
-            const { lat, lon, city } = this.config.weather;
-            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+            if (projectCode) {
+                this.config.weatherProject = projectCode;
+                localStorage.setItem('nexusWeatherProject', projectCode);
+            }
+            const code = this.config.weatherProject;
+            const loc = code && this.projectLocations[code] 
+                ? this.projectLocations[code] 
+                : { city: 'Paderborn', lat: 51.72, lon: 8.75 };
+            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current_weather=true`);
             const data = await res.json();
             const icons = { 0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️', 45: '🌫️', 51: '🌦️', 61: '🌧️', 71: '🌨️', 95: '⛈️' };
             this.state.weather = {
                 temp: Math.round(data.current_weather.temperature),
                 icon: icons[data.current_weather.weathercode] || '🌡️',
-                description: `${city}: ${Math.round(data.current_weather.temperature)}°C`,
-                city
+                description: `${loc.city}: ${Math.round(data.current_weather.temperature)}°C`,
+                city: loc.city,
+                project: code
             };
             this.render();
         } catch (e) {}
