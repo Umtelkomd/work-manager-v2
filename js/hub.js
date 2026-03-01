@@ -23,7 +23,8 @@ window.NexusHub = {
     apps: [
         { id: 'workmanager', name: 'Work Manager', desc: 'Control de proyectos fibra', icon: '⚡', color: 'gradient', type: 'local', url: null, view: 'dashboard' },
         { id: 'fincontrol', name: 'FinControl', desc: 'Finanzas y cashflow', icon: '💰', color: 'green', type: 'cloud', url: 'https://umtelkomd-finance.web.app' },
-        { id: 'stockanalyzer', name: 'Stock Analyzer', desc: 'Valuación DCF', icon: '📈', color: 'orange', type: 'cloud', url: 'https://jarl9801.github.io/stock-analyzer/' },
+        { id: 'fieldwc', name: 'Field WestConnect', desc: 'App campo WC', icon: '🔧', color: 'blue', type: 'cloud', url: 'https://umtelkomd.github.io/field-report/westconnect.html' },
+        { id: 'fieldgfp', name: 'Field Glasfaser+', desc: 'App campo GFP', icon: '🔌', color: 'teal', type: 'cloud', url: 'https://umtelkomd.github.io/field-report/glasfaser.html' },
         { id: 'nexusweb', name: 'Nexus Website', desc: 'Web corporativa', icon: '🌐', color: 'blue', type: 'cloud', url: 'https://hmr-nexus.com' },
         { id: 'nexusbot', name: 'Nexus Bot', desc: 'Telegram bot AI', icon: '🤖', color: 'purple', type: 'cloud', url: 'https://t.me/HMRNexusBot' },
         { id: 'fieldreport', name: 'Field Report', desc: 'Gestión de citas', icon: '📋', color: 'teal', type: 'cloud', url: 'https://umtelkomd.github.io/field-report/' }
@@ -270,9 +271,9 @@ window.NexusHub = {
                 <span>💰</span>
                 <div><strong>FinControl</strong><small>Ver finanzas</small></div>
             </button>
-            <button class="nexus-quick-btn" onclick="NexusHub.launchApp('stockanalyzer')">
+            <button class="nexus-quick-btn" onclick="NexusHub.launchApp('fieldwc')">
                 <span>📈</span>
-                <div><strong>Stocks</strong><small>Portfolio</small></div>
+                <div><strong>Field WC</strong><small>Tecnicos</small></div>
             </button>
             <button class="nexus-quick-btn" onclick="NexusHub.switchTab('kanban')">
                 <span>📋</span>
