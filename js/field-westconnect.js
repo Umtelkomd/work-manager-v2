@@ -362,11 +362,11 @@
                 <button class="fwc-citas-tab active" id="fwcTabPend" onclick="window.fwcSwitchCitasTab('pendientes')">📋 Pendientes</button>
                 <button class="fwc-citas-tab" id="fwcTabHist" onclick="window.fwcSwitchCitasTab('historial')">📁 Historial</button>
             </div>
-            <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
-                <button onclick="window.fwcPrevDay()" style="background:var(--bg-tertiary);color:var(--text-primary);border:1px solid var(--border);border-radius:8px;padding:10px 12px;cursor:pointer;font-size:16px;">◀</button>
-                <input type="date" id="fwcCitasDate" value="${new Date().toISOString().split('T')[0]}" onchange="window.fwcLoadCitasForSelectedDate()" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg-tertiary);color:var(--text-primary);font-size:14px;text-align:center;">
-                <button onclick="window.fwcNextDay()" style="background:var(--bg-tertiary);color:var(--text-primary);border:1px solid var(--border);border-radius:8px;padding:10px 12px;cursor:pointer;font-size:16px;">▶</button>
-                <button onclick="window.fwcLoadCitasForSelectedDate()" style="background:var(--blue);color:white;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;">🔄</button>
+            <div class="fwc-date-nav">
+                <button onclick="window.fwcPrevDay()" style="background:var(--bg-tertiary);color:var(--text-primary);border:1px solid var(--border);">◀</button>
+                <input type="date" id="fwcCitasDate" value="${new Date().toISOString().split('T')[0]}" onchange="window.fwcLoadCitasForSelectedDate()">
+                <button onclick="window.fwcNextDay()" style="background:var(--bg-tertiary);color:var(--text-primary);border:1px solid var(--border);">▶</button>
+                <button onclick="window.fwcLoadCitasForSelectedDate()" style="background:var(--blue);color:white;border:none;">🔄</button>
             </div>
             <div id="fwcCitasLoading" style="text-align:center;padding:32px;color:var(--text-secondary);">⏳ Cargando citas…</div>
             <div id="fwcCitasEmpty" style="display:none;text-align:center;padding:32px;color:var(--text-secondary);">📭 Sin citas para esta fecha.</div>
@@ -1079,39 +1079,50 @@
     function getCSS() {
         return `<style>
         .fwc-app { max-width:600px; margin:0 auto; }
-        .fwc-topbar { background:var(--bg-secondary); border-bottom:1px solid var(--border); padding:12px 16px; display:flex; align-items:center; justify-content:space-between; border-radius:12px 12px 0 0; margin-bottom:16px; }
-        .fwc-back-btn { background:none; border:none; color:var(--blue); font-size:20px; cursor:pointer; padding:4px 8px; }
+
+        /* ── Top bar ── */
+        .fwc-topbar { background:var(--bg-secondary); border-bottom:1px solid var(--border); padding:14px 16px; display:flex; align-items:center; justify-content:space-between; border-radius:14px 14px 0 0; margin-bottom:16px; backdrop-filter:blur(20px); }
+        .fwc-back-btn { background:none; border:none; color:var(--blue); font-size:22px; cursor:pointer; padding:6px 10px; border-radius:8px; transition:background 0.15s; }
+        .fwc-back-btn:active { background:var(--bg-tertiary); }
         .fwc-status { display:flex; gap:8px; align-items:center; font-size:13px; color:var(--text-secondary); }
-        .fwc-conn-dot { width:10px; height:10px; border-radius:50%; background:var(--green); }
-        .fwc-conn-dot.offline { background:var(--orange); }
+        .fwc-conn-dot { width:10px; height:10px; border-radius:50%; background:var(--green); box-shadow:0 0 6px rgba(48,209,88,0.5); }
+        .fwc-conn-dot.offline { background:var(--orange); box-shadow:0 0 6px rgba(255,159,10,0.5); }
         .fwc-lang-toggle { display:flex; gap:4px; }
-        .fwc-lang-btn { background:var(--bg-tertiary); border:1px solid var(--border); color:var(--text-secondary); padding:4px 10px; border-radius:4px; font-size:12px; font-weight:600; cursor:pointer; }
+        .fwc-lang-btn { background:var(--bg-tertiary); border:1px solid var(--border); color:var(--text-secondary); padding:6px 12px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.15s; }
         .fwc-lang-btn.active { background:var(--blue); color:white; border-color:var(--blue); }
-        .fwc-content { padding:0 4px; }
-        .fwc-pin-screen { display:flex; flex-direction:column; align-items:center; gap:16px; padding-top:20px; }
-        .fwc-logo { width:50px; height:50px; margin:0 auto 8px; background:linear-gradient(135deg,var(--blue),#0066cc); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:24px; font-weight:bold; }
-        .fwc-logo-title { font-size:20px; font-weight:700; text-align:center; }
-        .fwc-logo-sub { font-size:12px; color:var(--text-secondary); text-align:center; }
-        .fwc-pin-label { font-size:14px; color:var(--text-secondary); text-align:center; }
-        .fwc-pin-digits { display:flex; gap:12px; justify-content:center; margin:8px 0; }
-        .fwc-pin-digit { width:48px; height:56px; display:flex; align-items:center; justify-content:center; font-size:24px; border:2px solid var(--border); border-radius:8px; background:var(--bg-secondary); color:var(--text-primary); }
-        .fwc-pin-digit.filled { border-color:var(--blue); background:var(--bg-tertiary); }
-        .fwc-keypad { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; max-width:280px; margin:0 auto; }
-        .fwc-key { height:56px; font-size:22px; font-weight:600; border:1px solid var(--border); border-radius:8px; background:var(--bg-secondary); color:var(--text-primary); cursor:pointer; }
-        .fwc-key:active { background:var(--bg-tertiary); }
-        .fwc-member-screen { text-align:center; padding-top:40px; }
-        .fwc-member-list { display:flex; flex-direction:column; gap:10px; max-width:320px; margin:16px auto 0; }
-        .fwc-member-btn { width:100%; padding:14px; background:var(--bg-secondary); border:2px solid var(--border); border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; color:var(--text-primary); }
-        .fwc-member-btn:hover { border-color:var(--blue); }
+        .fwc-content { padding:0 8px; }
+
+        /* ── PIN screen ── */
+        .fwc-pin-screen { display:flex; flex-direction:column; align-items:center; gap:20px; padding-top:32px; }
+        .fwc-logo { width:64px; height:64px; margin:0 auto 12px; background:linear-gradient(135deg,var(--blue),#0055cc); border-radius:16px; display:flex; align-items:center; justify-content:center; color:white; font-size:28px; font-weight:bold; box-shadow:0 8px 24px rgba(10,132,255,0.25); }
+        .fwc-logo-title { font-size:22px; font-weight:700; text-align:center; }
+        .fwc-logo-sub { font-size:13px; color:var(--text-secondary); text-align:center; margin-top:2px; }
+        .fwc-pin-label { font-size:15px; color:var(--text-secondary); text-align:center; }
+        .fwc-pin-digits { display:flex; gap:14px; justify-content:center; margin:12px 0; }
+        .fwc-pin-digit { width:52px; height:60px; display:flex; align-items:center; justify-content:center; font-size:26px; border:2px solid var(--border); border-radius:12px; background:var(--bg-secondary); color:var(--text-primary); transition:all 0.15s; }
+        .fwc-pin-digit.filled { border-color:var(--blue); background:var(--bg-tertiary); box-shadow:0 0 8px rgba(10,132,255,0.15); }
+        .fwc-keypad { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; max-width:300px; margin:0 auto; }
+        .fwc-key { height:60px; font-size:24px; font-weight:600; border:1px solid var(--border); border-radius:12px; background:var(--bg-secondary); color:var(--text-primary); cursor:pointer; transition:all 0.1s; -webkit-tap-highlight-color:transparent; }
+        .fwc-key:active { background:var(--blue); color:white; transform:scale(0.95); }
+
+        /* ── Member selection ── */
+        .fwc-member-screen { text-align:center; padding-top:32px; }
+        .fwc-member-list { display:flex; flex-direction:column; gap:12px; max-width:360px; margin:20px auto 0; }
+        .fwc-member-btn { width:100%; padding:16px 20px; background:var(--bg-secondary); border:2px solid var(--border); border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; color:var(--text-primary); transition:all 0.15s; display:flex; align-items:center; gap:12px; text-align:left; }
+        .fwc-member-btn::before { content:'👷'; font-size:20px; }
+        .fwc-member-btn:hover, .fwc-member-btn:active { border-color:var(--blue); background:rgba(10,132,255,0.08); }
+
+        /* ── Citas screen ── */
         .fwc-citas-screen { padding:0 4px; }
-        .fwc-citas-header { background:linear-gradient(135deg,var(--blue),#0066cc); color:white; border-radius:12px; padding:16px; margin-bottom:16px; }
-        .fwc-citas-tab { flex:1; padding:10px; border:none; border-radius:8px; font-weight:600; cursor:pointer; background:var(--bg-tertiary); color:var(--text-secondary); font-size:14px; }
-        .fwc-citas-tab.active { background:var(--blue); color:white; }
-        .fwc-cita-card { background:var(--bg-secondary); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:12px; }
+        .fwc-citas-header { background:linear-gradient(135deg,var(--blue),#0055cc); color:white; border-radius:16px; padding:20px; margin-bottom:16px; box-shadow:0 4px 16px rgba(10,132,255,0.2); }
+        .fwc-citas-tab { flex:1; padding:12px; border:none; border-radius:10px; font-weight:600; cursor:pointer; background:var(--bg-tertiary); color:var(--text-secondary); font-size:14px; transition:all 0.15s; min-height:44px; }
+        .fwc-citas-tab.active { background:var(--blue); color:white; box-shadow:0 2px 8px rgba(10,132,255,0.3); }
+        .fwc-cita-card { background:var(--bg-secondary); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:12px; transition:transform 0.1s; }
+        .fwc-cita-card:active { transform:scale(0.99); }
         .fwc-cita-card.status-asignada { border-left:4px solid var(--blue); }
         .fwc-cita-card.status-capturada { border-left:4px solid var(--orange); }
         .fwc-cita-card.status-en_trabajo { border-left:4px solid var(--green); }
-        .fwc-cita-badge { font-size:11px; font-weight:700; border-radius:20px; padding:3px 10px; text-transform:uppercase; }
+        .fwc-cita-badge { font-size:11px; font-weight:700; border-radius:20px; padding:4px 12px; text-transform:uppercase; letter-spacing:0.3px; }
         .badge-asignada { background:var(--blue-dim); color:var(--blue); }
         .badge-capturada { background:var(--orange-dim); color:var(--orange); }
         .badge-en_trabajo { background:var(--green-dim); color:var(--green); }
@@ -1120,58 +1131,80 @@
         .badge-cliente_ausente { background:var(--orange-dim); color:var(--orange); }
         .badge-recitar { background:rgba(191,90,242,0.12); color:var(--purple); }
         .badge-paralizada { background:rgba(255,255,255,0.06); color:var(--text-secondary); }
-        .fwc-cita-actions { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
-        .fwc-cita-btn { flex:1; min-width:100px; padding:10px 12px; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; text-align:center; text-decoration:none; }
-        .fwc-cita-btn.primary { background:var(--blue); color:white; }
-        .fwc-cita-btn.success { background:var(--green); color:white; }
+        .fwc-cita-actions { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+        .fwc-cita-btn { flex:1; min-width:110px; padding:12px 16px; border:none; border-radius:10px; font-size:15px; font-weight:600; cursor:pointer; text-align:center; text-decoration:none; min-height:48px; display:flex; align-items:center; justify-content:center; gap:6px; transition:all 0.15s; -webkit-tap-highlight-color:transparent; }
+        .fwc-cita-btn:active { transform:scale(0.96); }
+        .fwc-cita-btn.primary { background:var(--blue); color:white; box-shadow:0 2px 8px rgba(10,132,255,0.3); }
+        .fwc-cita-btn.success { background:var(--green); color:white; box-shadow:0 2px 8px rgba(48,209,88,0.3); }
         .fwc-cita-btn.doc { background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border); }
-        .fwc-skip-btn { width:100%; padding:14px; margin-top:8px; background:var(--bg-secondary); border:1px solid var(--border); border-radius:10px; font-size:15px; cursor:pointer; color:var(--text-secondary); }
-        .fwc-bottom-actions { display:flex; gap:12px; padding:12px 0; }
-        .fwc-fab { flex:1; padding:14px; border:none; border-radius:8px; font-size:15px; font-weight:600; cursor:pointer; min-height:48px; }
-        .fwc-fab-primary { background:var(--blue); color:white; }
-        .fwc-fab-secondary { background:var(--bg-secondary); color:var(--text-primary); border:1px solid var(--border); }
+        .fwc-skip-btn { width:100%; padding:16px; margin-top:12px; background:var(--bg-secondary); border:1.5px solid var(--border); border-radius:12px; font-size:15px; font-weight:500; cursor:pointer; color:var(--text-secondary); transition:all 0.15s; }
+        .fwc-skip-btn:active { background:var(--bg-tertiary); }
+
+        /* ── Date navigation ── */
+        .fwc-date-nav { display:flex; gap:8px; margin-bottom:14px; align-items:center; }
+        .fwc-date-nav button { min-width:44px; min-height:44px; border-radius:10px; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; -webkit-tap-highlight-color:transparent; }
+        .fwc-date-nav button:active { transform:scale(0.93); }
+        .fwc-date-nav input[type="date"] { flex:1; padding:12px; border-radius:10px; border:1px solid var(--border); background:var(--bg-tertiary); color:var(--text-primary); font-size:15px; font-weight:500; text-align:center; min-height:44px; }
+
+        /* ── Form ── */
+        .fwc-bottom-actions { display:flex; gap:12px; padding:14px 0; }
+        .fwc-fab { flex:1; padding:16px; border:none; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; min-height:52px; display:flex; align-items:center; justify-content:center; gap:8px; transition:all 0.15s; -webkit-tap-highlight-color:transparent; }
+        .fwc-fab:active { transform:scale(0.97); }
+        .fwc-fab-primary { background:var(--blue); color:white; box-shadow:0 4px 12px rgba(10,132,255,0.25); }
+        .fwc-fab-secondary { background:var(--bg-secondary); color:var(--text-primary); border:1.5px solid var(--border); }
         .fwc-form-screen { padding:0 4px; }
-        .fwc-progress { height:4px; background:var(--bg-tertiary); border-radius:2px; margin-bottom:12px; overflow:hidden; }
-        .fwc-progress-fill { height:100%; background:var(--blue); transition:width 0.3s; }
-        .fwc-section { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:12px; }
-        .fwc-section-title { font-size:15px; font-weight:700; color:var(--blue); margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
-        .fwc-field { margin-bottom:12px; }
-        .fwc-field label { display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:4px; }
+        .fwc-progress { height:5px; background:var(--bg-tertiary); border-radius:3px; margin-bottom:14px; overflow:hidden; }
+        .fwc-progress-fill { height:100%; background:linear-gradient(90deg,var(--blue),#0066ff); transition:width 0.3s; border-radius:3px; }
+        .fwc-section { background:var(--bg-secondary); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:14px; }
+        .fwc-section-title { font-size:15px; font-weight:700; color:var(--blue); margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+        .fwc-field { margin-bottom:14px; }
+        .fwc-field label { display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; }
         .fwc-field label.required::after { content:' *'; color:var(--red); }
-        .fwc-field-display { padding:10px 12px; background:var(--bg-tertiary); border-radius:6px; font-weight:600; color:var(--text-primary); border:1px solid var(--border); }
-        .fwc-input { width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:6px; font-size:15px; background:var(--bg-tertiary); color:var(--text-primary); -webkit-appearance:none; }
-        .fwc-input:focus { outline:none; border-color:var(--blue); }
-        .fwc-radio-label { display:flex; align-items:center; gap:6px; padding:10px 20px; border:2px solid var(--border); border-radius:8px; cursor:pointer; font-weight:600; font-size:15px; color:var(--text-primary); }
-        .fwc-radio-label input { width:18px; height:18px; accent-color:var(--blue); }
-        .fwc-counter { font-size:12px; font-weight:600; padding:2px 8px; border-radius:10px; background:var(--bg-tertiary); color:var(--text-secondary); }
+        .fwc-field-display { padding:12px 14px; background:var(--bg-tertiary); border-radius:8px; font-weight:600; color:var(--text-primary); border:1px solid var(--border); }
+        .fwc-input { width:100%; padding:12px 14px; border:1.5px solid var(--border); border-radius:10px; font-size:15px; background:var(--bg-tertiary); color:var(--text-primary); -webkit-appearance:none; transition:border-color 0.15s; min-height:44px; box-sizing:border-box; }
+        .fwc-input:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(10,132,255,0.1); }
+        .fwc-radio-label { display:flex; align-items:center; gap:8px; padding:12px 20px; border:2px solid var(--border); border-radius:10px; cursor:pointer; font-weight:600; font-size:15px; color:var(--text-primary); transition:all 0.15s; min-height:48px; }
+        .fwc-radio-label:has(input:checked) { border-color:var(--blue); background:rgba(10,132,255,0.06); }
+        .fwc-radio-label input { width:20px; height:20px; accent-color:var(--blue); }
+        .fwc-counter { font-size:12px; font-weight:600; padding:3px 10px; border-radius:12px; background:var(--bg-tertiary); color:var(--text-secondary); }
         .fwc-counter.complete { background:var(--green-dim); color:var(--green); }
-        .fwc-we-tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
-        .fwc-we-tab { padding:6px 14px; border:2px solid var(--border); border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; background:var(--bg-secondary); color:var(--text-secondary); }
-        .fwc-we-tab.active { border-color:var(--blue); color:var(--blue); }
+        .fwc-we-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+        .fwc-we-tab { padding:8px 16px; border:2px solid var(--border); border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; background:var(--bg-secondary); color:var(--text-secondary); transition:all 0.15s; min-height:36px; }
+        .fwc-we-tab.active { border-color:var(--blue); color:var(--blue); background:rgba(10,132,255,0.06); }
         .fwc-we-panel { display:none; }
         .fwc-we-panel.active { display:block; }
-        .fwc-checklist { display:flex; flex-direction:column; gap:8px; }
-        .fwc-check-item { display:flex; align-items:flex-start; gap:10px; padding:10px; border-radius:6px; cursor:pointer; }
-        .fwc-check-item input[type="checkbox"] { width:20px; height:20px; margin-top:2px; accent-color:var(--green); flex-shrink:0; }
-        .fwc-alert { padding:12px 16px; border-radius:6px; margin-bottom:8px; font-size:13px; }
+        .fwc-checklist { display:flex; flex-direction:column; gap:10px; }
+        .fwc-check-item { display:flex; align-items:flex-start; gap:12px; padding:12px; border-radius:10px; cursor:pointer; transition:background 0.1s; }
+        .fwc-check-item:active { background:var(--bg-tertiary); }
+        .fwc-check-item input[type="checkbox"] { width:22px; height:22px; margin-top:2px; accent-color:var(--green); flex-shrink:0; }
+        .fwc-alert { padding:14px 18px; border-radius:10px; margin-bottom:10px; font-size:14px; font-weight:500; }
         .fwc-alert-error { background:var(--red-dim); color:var(--red); border:1px solid rgba(255,69,58,0.3); }
         .fwc-alert-warning { background:var(--orange-dim); color:var(--orange); }
         .fwc-alert-success { background:var(--green-dim); color:var(--green); }
-        /* Photo styles */
-        .fr-photo-section { margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+
+        /* ── Photo styles ── */
+        .fr-photo-section { margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--border); }
         .fr-photo-section:last-child { border-bottom:none; }
-        .fr-photo-label { font-size:13px; font-weight:600; color:var(--text-primary); margin-bottom:6px; display:block; }
+        .fr-photo-label { font-size:13px; font-weight:600; color:var(--text-primary); margin-bottom:8px; display:block; }
         .fr-photo-label.required::after { content:' *'; color:var(--red); }
         .fr-photo-label.optional::after { content:' (opcional)'; color:var(--text-secondary); font-weight:400; font-size:11px; }
-        .fr-upload-btn { display:inline-flex; align-items:center; gap:4px; padding:8px 16px; background:var(--bg-tertiary); border:1px dashed var(--border-light); border-radius:6px; font-size:13px; cursor:pointer; min-height:44px; color:var(--text-primary); }
-        .fr-upload-btn:active { background:var(--bg-hover); }
+        .fr-upload-btn { display:inline-flex; align-items:center; gap:6px; padding:10px 18px; background:var(--bg-tertiary); border:1.5px dashed var(--border-light); border-radius:10px; font-size:14px; cursor:pointer; min-height:48px; color:var(--text-primary); transition:all 0.15s; }
+        .fr-upload-btn:active { background:var(--bg-hover); border-color:var(--blue); }
         .fr-photo-file-input { display:none; }
-        .fr-photo-preview-container { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
-        .fr-photo-preview { position:relative; width:64px; height:64px; border-radius:6px; overflow:hidden; border:1px solid var(--border); }
+        .fr-photo-preview-container { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+        .fr-photo-preview { position:relative; width:72px; height:72px; border-radius:10px; overflow:hidden; border:1.5px solid var(--border); }
         .fr-photo-preview img { width:100%; height:100%; object-fit:cover; }
         .fr-photo-preview.fr-photo-warn { border:2px solid var(--orange); }
         .fr-photo-warning { position:absolute; bottom:0; left:0; right:0; background:rgba(255,159,10,0.85); color:white; font-size:9px; font-weight:600; text-align:center; padding:2px; }
-        .fr-photo-remove { position:absolute; top:2px; right:2px; width:20px; height:20px; background:var(--red); color:white; border:none; border-radius:50%; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+        .fr-photo-remove { position:absolute; top:3px; right:3px; width:22px; height:22px; background:var(--red); color:white; border:none; border-radius:50%; font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+
+        /* ── Mobile touch targets ── */
+        @media (max-width:640px) {
+            .fwc-key { height:56px; }
+            .fwc-cita-btn { min-height:50px; font-size:14px; }
+            .fwc-fab { min-height:50px; }
+            .fwc-member-btn { padding:18px 20px; }
+        }
         </style>`;
     }
 })();
