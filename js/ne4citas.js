@@ -133,6 +133,29 @@
 
             document.getElementById('citasStatusMsg').textContent = `✅ ${citas.length} citas · ${data.generated ? data.generated.substring(0, 16) : ''}`;
 
+            // Cross-reference with today's field reports
+            if (window.FieldReports) {
+                const today = new Date().toISOString().split('T')[0];
+                window.FieldReports.fetchReports(today).then(() => {
+                    allCitasData.forEach(c => {
+                        if (!c.ha) return;
+                        const reports = window.FieldReports.getReportsForHA(c.ha);
+                        if (reports.length === 0) return;
+                        const cardEl = document.getElementById('cita-' + c.id);
+                        if (!cardEl) return;
+                        // Add indicator if not already present
+                        if (!cardEl.querySelector('.fr-reported-dot')) {
+                            const dot = document.createElement('span');
+                            dot.className = 'fr-reported-dot';
+                            dot.title = 'Reporte enviado: ' + (reports[0].statusLabel || reports[0].workStatus || '');
+                            dot.style.cssText = 'display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-left:6px;vertical-align:middle;';
+                            const haEl = cardEl.querySelector('span[style*="font-size:17px"]');
+                            if (haEl) haEl.appendChild(dot);
+                        }
+                    });
+                }).catch(() => {});
+            }
+
         } catch (err) {
             loading.style.display = 'none';
             grid.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div class="title">Error</div><div class="desc">${err.message}</div></div>`;
