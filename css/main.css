@@ -182,18 +182,20 @@ body {
 .card-title { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ===== KPI CARDS ===== */
-.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
 .kpi-card {
     background: var(--bg-card);
     backdrop-filter: blur(20px);
     border: 0.5px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 20px;
+    padding: 16px 18px;
     box-shadow: var(--shadow-sm);
+    min-width: 0;
+    overflow: hidden;
 }
-.kpi-label { font-size: 12px; color: var(--text-secondary); font-weight: 500; margin-bottom: 8px; }
-.kpi-value { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; }
-.kpi-sub { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+.kpi-label { font-size: 11px; color: var(--text-secondary); font-weight: 500; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kpi-value { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kpi-sub { font-size: 11px; color: var(--text-secondary); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .kpi-value.green { color: var(--green); }
 .kpi-value.blue { color: var(--blue); }
 .kpi-value.orange { color: var(--orange); }
@@ -487,15 +489,19 @@ tbody tr:last-child td { border-bottom: none; }
     .menu-toggle { display: block; }
     .content { padding: 16px; }
     .topbar { padding: 0 16px; }
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .kpi-card { padding: 14px; }
+    .kpi-value { font-size: 22px; }
     .project-grid { grid-template-columns: 1fr; }
     .team-grid { grid-template-columns: 1fr; }
     .filter-bar { gap: 8px; }
 }
 
 @media (max-width: 480px) {
-    .kpi-grid { grid-template-columns: 1fr; }
-    .kpi-value { font-size: 24px; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .kpi-card { padding: 12px; }
+    .kpi-value { font-size: 20px; }
+    .kpi-label { font-size: 10px; }
 }
 
 /* ===== NE4 CITAS ===== */
