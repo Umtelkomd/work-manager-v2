@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Work Manager v2</title>
+    <title>NE4 Work Manager</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,51 +19,15 @@
             <div class="sidebar-brand">
                 <div class="brand-icon">⚡</div>
                 <div>
-                    <h2>Work Manager</h2>
-                    <span class="brand-sub">v2.0 — Nexus GmbH</span>
+                    <h2>NE4 Work Manager</h2>
+                    <span class="brand-sub">Nexus GmbH</span>
                 </div>
             </div>
         </div>
         <nav class="sidebar-nav">
-            <a class="nav-item active" data-view="dashboard" onclick="window.navigate('dashboard')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-                Dashboard
-            </a>
-            <a class="nav-item" data-view="projects" onclick="window.navigate('projects')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
-                Proyectos
-            </a>
-            <a class="nav-item" data-view="production" onclick="window.navigate('production')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
-                Producción
-            </a>
-            <a class="nav-item" data-view="teams" onclick="window.navigate('teams')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-                Equipos
-            </a>
-            <a class="nav-item" data-view="ne3clients" onclick="window.navigate('ne3clients')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                Clientes NE3
-            </a>
-            <a class="nav-item" data-view="ne4citas" onclick="window.navigate('ne4citas')">
+            <a class="nav-item active" data-view="ne4citas" onclick="window.navigate('ne4citas')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 Citas WC
-            </a>
-            <a class="nav-item" data-view="gfpcitas" onclick="window.navigate('gfpcitas')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="17" cy="17" r="5" fill="var(--bg-secondary)" stroke="currentColor"/><text x="17" y="19" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">G</text></svg>
-                Citas GFP
-            </a>
-            <a class="nav-item" data-view="fieldreports" onclick="window.navigate('fieldreports')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                Reportes
-            </a>
-            <a class="nav-item" data-view="clients" onclick="window.navigate('clients')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                Clientes NE4
-            </a>
-            <a class="nav-item" data-view="certification" onclick="window.navigate('certification')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-                Certificación
             </a>
             <a class="nav-item" data-view="hub" onclick="window.navigate('hub')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
@@ -75,7 +39,7 @@
             </a>
         </nav>
         <div class="sidebar-footer">
-            <span class="version-label">WM v2.0</span>
+            <span class="version-label">NE4 WM</span>
         </div>
     </aside>
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="window.toggleSidebar()"></div>
@@ -87,30 +51,17 @@
                 <button class="menu-toggle" onclick="window.toggleSidebar()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                 </button>
-                <h1 id="pageTitle">Dashboard</h1>
+                <h1 id="pageTitle">Citas WC</h1>
             </div>
             <div class="topbar-right">
                 <div class="topbar-quick-links">
-                    <button class="quick-link-btn" title="Campo — Field Control" onclick="window.navigate('hub')">📡 Campo</button>
                     <button class="quick-link-btn quick-link-btn-finance" title="FinControl" onclick="window.open('https://umtelkomd-finance.web.app','_blank')">💰 FinControl</button>
                 </div>
                 <span class="kw-badge" id="currentKW"></span>
             </div>
         </header>
         <div class="content">
-            <div id="view-dashboard" class="view active"></div>
-            <div id="view-projects" class="view"></div>
-            <div id="view-production" class="view"></div>
-            <div id="view-teams" class="view"></div>
-            <div id="view-ne3clients" class="view"></div>
-            <div id="view-ne4citas" class="view"></div>
-            <div id="view-gfpcitas" class="view"></div>
-            <div id="view-clients" class="view"></div>
-            <div id="view-certification" class="view"></div>
-            <div id="view-fieldreports" class="view"></div>
-            <div id="view-fieldwc" class="view"></div>
-            <div id="view-fieldgfp" class="view"></div>
-            <div id="view-fieldadmin" class="view"></div>
+            <div id="view-ne4citas" class="view active"></div>
             <div id="view-hub" class="view"></div>
             <div id="view-settings" class="view"></div>
         </div>
@@ -136,21 +87,8 @@
     <script src="js/i18n.js"></script>
     <script src="js/db.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/dashboard.js"></script>
-    <script src="js/projects.js"></script>
-    <script src="js/production.js"></script>
-    <script src="js/teams.js"></script>
-    <script src="js/ne3clients.js"></script>
     <script src="js/ne4citas.js"></script>
-    <script src="js/clients.js"></script>
-    <script src="js/certification.js"></script>
     <script src="js/settings.js"></script>
-    <script src="js/gfp-citas.js"></script>
-    <script src="js/photo-utils.js"></script>
-    <script src="js/fieldreports.js"></script>
-    <script src="js/field-westconnect.js"></script>
-    <script src="js/field-glasfaser.js"></script>
-    <script src="js/field-admin.js"></script>
     <script src="js/hub.js"></script>
 </body>
 </html>

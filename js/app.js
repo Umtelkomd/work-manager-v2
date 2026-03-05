@@ -22,20 +22,8 @@
 
     // Navigation
     const viewTitles = {
-        dashboard: 'Dashboard',
-        projects: 'Proyectos',
-        production: 'Producción',
-        teams: 'Equipos',
-        ne3clients: 'Clientes NE3',
         ne4citas: 'Citas WC',
-        gfpcitas: 'Citas GFP',
-        clients: 'Clientes NE4',
-        certification: 'Certificación',
-        hub: '🔗 Hub de Apps',
-        fieldwc: '🔧 Field WestConnect',
-        fieldgfp: '🔌 Field Glasfaser+',
-        fieldadmin: '📊 Field Admin',
-        fieldreports: '📄 Reportes de Campo',
+        hub: 'Hub de Apps',
         settings: 'Ajustes'
     };
 
@@ -189,6 +177,6 @@
     });
 
     // Route from hash
-    const hash = window.location.hash.replace('#', '') || 'dashboard';
+    const hash = window.location.hash.replace('#', '') || 'ne4citas';
     window.navigate(hash);
 })();

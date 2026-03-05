@@ -1,27 +1,14 @@
-const CACHE_NAME = 'wm-v2-cache-v5';
+const CACHE_NAME = 'wm-v2-cache-v6';
 const ASSETS = [
   './',
   './index.html',
   './css/main.css',
   './js/app.js',
   './js/db.js',
-  './js/dashboard.js',
-  './js/projects.js',
-  './js/production.js',
-  './js/teams.js',
-  './js/clients.js',
-  './js/ne3clients.js',
   './js/ne4citas.js',
-  './js/gfp-citas.js',
   './js/hub.js',
-  './js/certification.js',
   './js/settings.js',
   './js/i18n.js',
-  './js/fieldreports.js',
-  './js/photo-utils.js',
-  './js/field-westconnect.js',
-  './js/field-glasfaser.js',
-  './js/field-admin.js',
   './data/projects.js',
   './data/prices.js'
 ];
